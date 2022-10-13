@@ -11,17 +11,19 @@
     "prettier"
   ],
   "overrides": [
+    {
+      "files": ["**/*.stories.*"],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
+    }
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "import"
-  ],
+  "plugins": ["react", "@typescript-eslint", "import"],
   "rules": {
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
@@ -30,24 +32,19 @@
       "error",
       {
         "groups": [
-          "builtin",  // 組み込みモジュール
+          "builtin", // 組み込みモジュール
           "external", // npmでインストールした外部ライブラリ
           "internal", // 自作モジュール
-          [
-            "parent",
-            "sibling"
-          ],
+          ["parent", "sibling"],
           "object",
           "type",
           "index"
         ],
         "newlines-between": "always", // グループ毎にで改行を入れる
-        "pathGroupsExcludedImportTypes": [
-          "builtin"
-        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
         "alphabetize": {
           "order": "asc", // 昇順にソート
-          "caseInsensitive": false // 小文字大文字を区別する 
+          "caseInsensitive": false // 小文字大文字を区別する
         }
       }
     ]
