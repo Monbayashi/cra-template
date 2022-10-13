@@ -1,8 +1,6 @@
-import { lintName } from "../../../utils/lintNames";
+import { lintName } from '../../../utils/lintNames';
 
-type TypeProps = 
-{ type: 'button', onClick: () => void; }
-| { type: 'submit', onClick?: () => void; }
+type TypeProps = { type: 'button'; onClick: () => void } | { type: 'submit'; onClick?: () => void };
 
 type Props = {
   color: 'blue' | 'red' | 'green';
@@ -16,8 +14,8 @@ export const classNames = {
   green: lintName('border-green-700 bg-green-500 hover:bg-green-700'),
 } as const;
 
-export const SimpleButton: React.FC<Props> = ({ type, onClick, color, children, }) => (
-  <button type={type} className={`${classNames._base} ${classNames[color]}`} onClick={onClick} >
+export const SimpleButton: React.FC<Props> = ({ type, onClick, color, children }) => (
+  <button type={type} className={`${classNames._base} ${classNames[color]}`} onClick={onClick}>
     {children}
   </button>
-)
+);
