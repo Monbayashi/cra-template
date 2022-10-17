@@ -11,9 +11,10 @@ type Props = {
 };
 
 export const SettingValue: React.FC<Props> = ({ time, datas }) => {
+  const description = time ? `(${time})` : undefined;
   return (
     <Card>
-      <CardHeader title='N-PMS設定' description={time ? `(${time})` : undefined} />
+      <CardHeader title='N-PMS設定' description={description} />
       <div className='overflow-x-auto'>
         <table className='w-full border-collapse items-center bg-transparent'>
           <thead className='border border-x-0 border-solid border-gray-500 bg-gray-600 font-semibold text-gray-100'>

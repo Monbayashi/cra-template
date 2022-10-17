@@ -15,11 +15,6 @@ export const SideBar: React.FC = () => {
             name='計測状態値記録'
             Icon={<SideBarLinkIcon type='Message' />}
           />
-          <SideBarLink
-            href='/notifications'
-            name='イベント指令再送要求'
-            Icon={<SideBarLinkIcon type='Bell' />}
-          />
           <SideBarTitle title='設定' />
           <SideBarLink
             href='/settings'
