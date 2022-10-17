@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   presets: [],
-  darkMode: 'media', // or 'class'
+  darkMode: 'class', // or 'class'
   theme: {
     screens: {
       sm: '640px',
@@ -643,20 +643,22 @@ module.exports = {
       prose: '65ch',
       ...breakpoints(theme('screens')),
     }),
-    minHeight: {
+    minHeight: ({ theme }) => ({
+      ...theme('spacing'),
       0: '0px',
       full: '100%',
       screen: '100vh',
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
-    },
+    }),
     minWidth: {
       0: '0px',
       full: '100%',
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
+      '140-px': '140px',
     },
     objectPosition: {
       bottom: 'bottom',
@@ -952,4 +954,4 @@ module.exports = {
     'disabled',
   ],
   plugins: [],
-}
+};

@@ -1,36 +1,18 @@
-import { SimpleButton } from './components/parts/button/SimpleButton.parts';
-import './App.css';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import { DashBoardPage } from './components/pages/dashboard/DashBoardPage';
+import { NotFoundPage } from './components/pages/not-found-404/NotFoundPage';
+import { SettingsPage } from './components/pages/settings/SettingsPage';
 
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='text-red-500'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-        <div className='flex overflow-auto px-0'>
-          <SimpleButton type='submit' color='blue'>
-            Blue Button
-          </SimpleButton>
-          <SimpleButton type='button' onClick={() => console.log('Red')} color='red'>
-            Red Button
-          </SimpleButton>
-          <SimpleButton type='button' onClick={() => console.log('Green')} color='green'>
-            Green Button
-          </SimpleButton>
-        </div>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/' element={<DashBoardPage />} />
+        <Route path='/settings' element={<SettingsPage />} />
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
+    </Router>
   );
 }
 
