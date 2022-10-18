@@ -8,8 +8,7 @@ type Props = {
   disConnectHandling: () => void;
   status: 0 | 1;
   wsInfo: {
-    type: 'ws' | 'wss';
-    ip: string;
+    origin: string;
     deviceId: string;
     secKey: string;
   };
@@ -21,7 +20,7 @@ const classNames = {
 };
 
 export const ConnectionWs: React.FC<Props> = (props) => {
-  const urlOrigin = `${props.wsInfo.type}://${props.wsInfo.ip}`;
+  const urlOrigin = props.wsInfo.origin;
   const urlQueryDevice = `?deviceid=${props.wsInfo.deviceId}`;
   const urlQuerySeckey = `&seckey=${props.wsInfo.secKey}`;
   const statusName = props.status ? '接続済み' : '未接続';

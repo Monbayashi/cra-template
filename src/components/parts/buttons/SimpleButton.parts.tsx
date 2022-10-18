@@ -11,7 +11,7 @@ type Props = {
 export const classNames = {
   _base: lintName('rounded border py-1 px-3 font-bold '),
   blue: lintName(
-    'border-blue-700 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-red-700 focus:outline-none disabled:border-gray-600 disabled:bg-gray-500 ',
+    'border-blue-700 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-blue-700 focus:outline-none disabled:border-gray-600 disabled:bg-gray-500 ',
   ),
   red: lintName(
     'border-red-700 bg-red-500 text-gray-50 hover:bg-red-700 focus:bg-red-700 focus:outline-none disabled:border-gray-600 disabled:bg-gray-500',
