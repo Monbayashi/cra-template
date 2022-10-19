@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef } from 'react';
-import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
+import { useForm, SubmitHandler, useFieldArray, Controller } from 'react-hook-form';
+import { FixedSizeList } from 'react-window';
 import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
@@ -42,9 +43,11 @@ export const FormTms: React.FC<Props> = (props) => {
     register,
     control,
     handleSubmit,
+    clearErrors,
     formState: { errors },
   } = useForm<FormTmsType>({
     resolver: yupResolver(formTmsSchema),
+    reValidateMode: 'onSubmit',
     defaultValues: {
       isRandom: props.isRandom ? 'random' : '',
       randomMax: props.randomMax,
@@ -56,10 +59,6 @@ export const FormTms: React.FC<Props> = (props) => {
   const countRef = useRef<HTMLInputElement | null>(null);
   const { fields, append, remove, replace } = useFieldArray({ control, name: 'tms' });
 
-  const appendTm = () => append({ id: uuidv4(), name: '', value: 0 });
-
-  const removeTm = (index: number) => remove(index);
-
   const appendTms = () => {
     if (countRef.current == null) return;
     const nValue = Number(countRef.current.value);
@@ -69,9 +68,8 @@ export const FormTms: React.FC<Props> = (props) => {
       return { id: uuidv4(), name: `TM${index + 1}`, value: index + 1 };
     });
     replace(list);
+    clearErrors('tms');
   };
-
-  const removeTms = () => remove();
 
   const onSubmit: SubmitHandler<FormTmsType> = (data) => {
     const { isRandom, randomMax, randomMin, tms } = data;
@@ -88,7 +86,11 @@ export const FormTms: React.FC<Props> = (props) => {
       <CardHeader title='数値設定フォーム' />
       <form className='p-4' onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-wrap space-x-2'>
-          <SimpleButton type='button' color='blue' onClick={appendTm}>
+          <SimpleButton
+            type='button'
+            color='blue'
+            onClick={() => append({ id: uuidv4(), name: '', value: 0 })}
+          >
             追加
           </SimpleButton>
           <InputButton
@@ -99,45 +101,66 @@ export const FormTms: React.FC<Props> = (props) => {
           >
             登録
           </InputButton>
-          <SimpleButton type='button' color='red' onClick={removeTms}>
+          <SimpleButton type='button' color='red' onClick={() => remove()}>
             削除
           </SimpleButton>
         </div>
 
-        {errors.tms?.message && (
-          <span className='text-sm text-red-500'>※{errors.tms?.message}</span>
-        )}
-        <div className='max-h-96 overflow-y-auto py-4'>
-          {fields.map((fields, index) => (
-            <div className='flex items-center' key={fields.id}>
-              <div className='mr-2'>
-                <SimpleButton
+        <div className='h-5 text-sm text-red-500'>{errors.tms?.message}</div>
+        <FixedSizeList
+          height={384} // h-96
+          itemSize={50}
+          itemCount={fields.length}
+          itemData={fields}
+          itemKey={(i) => fields[i].id}
+          width={'100%'}
+        >
+          {({ style, index }) => {
+            return (
+              <div style={style} className='relative flex w-full pt-5'>
+                {errors.tms && (
+                  <span className='absolute top-0 left-[60px] text-xs text-red-500'>
+                    {errors.tms && errors.tms[index]?.name?.message && (
+                      <span>{` (識別子:${errors.tms[index]?.name?.message})`}</span>
+                    )}
+                    {errors.tms && errors.tms[index]?.value?.message && (
+                      <span>{` (送信値:${errors.tms[index]?.value?.message})`}</span>
+                    )}
+                  </span>
+                )}
+                <button
                   type='button'
-                  size='small'
-                  color='red'
-                  onClick={() => removeTm(index)}
+                  className='w-[60px] shrink-0 rounded border-2 border-transparent text-red-500 focus:border-2 focus:border-red-500 focus:outline-none'
+                  onClick={() => remove(index)}
                 >
-                  ×
-                </SimpleButton>
-              </div>
-              <div className='grid w-full grid-cols-2 gap-3'>
-                <LineTextInput<FormTmsType>
-                  id={`name_${fields.id}`}
+                  削除
+                </button>
+                <Controller
+                  render={({ field }) => (
+                    <input
+                      className='mx-2 grow border-b-2 border-gray-700 bg-transparent px-2 text-gray-50 focus:border-blue-500 focus:outline-none'
+                      placeholder='識別子'
+                      {...field}
+                    />
+                  )}
                   name={`tms.${index}.name`}
-                  placeholder='識別子'
-                  register={register}
-                  error={errors.tms && errors.tms[index]?.name?.message}
+                  control={control}
                 />
-                <LineTextInput<FormTmsType>
-                  id={`value_${fields.id}`}
+                <Controller
+                  render={({ field }) => (
+                    <input
+                      className='mx-2 grow border-b-2 border-gray-700 bg-transparent px-2 text-gray-50 focus:border-blue-500 focus:outline-none'
+                      placeholder='送信値'
+                      {...field}
+                    />
+                  )}
                   name={`tms.${index}.value`}
-                  placeholder='送信値'
-                  register={register}
+                  control={control}
                 />
               </div>
-            </div>
-          ))}
-        </div>
+            );
+          }}
+        </FixedSizeList>
         <CheckBox<FormTmsType>
           id='isRandom'
           name='isRandom'
@@ -196,3 +219,35 @@ const formTmsSchema = yup
       }),
     tms: yup.array().of(tmSchema).min(1, '1件以上のデータを登録して下さい'),
   });
+
+// <div className='max-h-96 overflow-y-auto py-4'>
+//   {fields.map((fields, index) => (
+//     <div className='flex items-center' key={fields.id}>
+//       <div className='mr-2'>
+//         <SimpleButton
+//           type='button'
+//           size='small'
+//           color='red'
+//           onClick={() => removeTm(index)}
+//         >
+//           ×
+//         </SimpleButton>
+//       </div>
+//       <div className='grid w-full grid-cols-2 gap-3'>
+//         <LineTextInput<FormTmsType>
+//           id={`name_${fields.id}`}
+//           name={`tms.${index}.name`}
+//           placeholder='識別子'
+//           register={register}
+//           error={errors.tms && errors.tms[index]?.name?.message}
+//         />
+//         <LineTextInput<FormTmsType>
+//           id={`value_${fields.id}`}
+//           name={`tms.${index}.value`}
+//           placeholder='送信値'
+//           register={register}
+//         />
+//       </div>
+//     </div>
+//   ))}
+// </div>
