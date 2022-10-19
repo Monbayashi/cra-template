@@ -15,9 +15,9 @@ export const CommandSchedule: React.FC<Props> = ({ time, datas }) => {
   return (
     <Card>
       <CardHeader title='充放電制御指令' description={description} />
-      <div className='overflow-x-auto'>
+      <div className='max-h-96 overflow-auto'>
         <table className='w-full border-collapse items-center bg-transparent'>
-          <thead className='border border-x-0 border-solid border-gray-500 bg-gray-600 font-semibold text-gray-100'>
+          <thead className='sticky top-0 bg-gray-600 font-semibold text-gray-100 outline-1'>
             <tr>
               <th className='whitespace-nowrap px-4 py-3 text-left align-middle'>実行時刻</th>
               <th className='whitespace-nowrap px-4 py-3 text-left align-middle'>継続時間(分)</th>

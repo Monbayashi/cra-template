@@ -4,7 +4,8 @@ import * as yup from 'yup';
 
 import { SimpleButton } from '../../parts/buttons/SimpleButton.parts';
 import { Card } from '../../parts/cards/Card';
-import { LineTextInput } from '../../parts/input/LineTextInput';
+import { CardHeader } from '../../parts/cards/CardHeader';
+import { LineTextInput } from '../../parts/form/LineTextInput';
 
 type Props = {
   registerHandling: (args: { origin: string; deviceId: string; secKey: string }) => void;
@@ -17,9 +18,9 @@ const formWssSchema = yup
   .object()
   .required()
   .shape({
-    origin: yup.string().required('必須項目です'), // TODO match url ws:// wss://
-    deviceId: yup.string().required('必須項目です'), // TODO 入力ルール
-    secKey: yup.string().required('必須項目です'), // TODO セキュリティキールール
+    origin: yup.string().required('必須項目です'),
+    deviceId: yup.string().required('必須項目です'),
+    secKey: yup.string().required('必須項目です'),
   });
 
 type FormWssType = Readonly<{
@@ -48,7 +49,8 @@ export const FormWss: React.FC<Props> = (props) => {
 
   return (
     <Card>
-      <form className='p-4' onSubmit={handleSubmit(onSubmit)}>
+      <CardHeader title='接続先設定フォーム' />
+      <form className='px-4 pb-4' onSubmit={handleSubmit(onSubmit)}>
         <LineTextInput<FormWssType>
           id='origin'
           name='origin'
