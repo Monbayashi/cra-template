@@ -14,8 +14,6 @@ import { CheckBox } from '../../parts/form/CheckBox';
 type Props = {
   registerHandling: (args: { isRandom: boolean; svs: SvType[] }) => void;
   isRandom: boolean;
-  randomMax: number;
-  randomMin: number;
   svs: SvType[];
 };
 
@@ -27,8 +25,6 @@ type SvType = {
 
 type FormSvsType = Readonly<{
   isRandom: string;
-  randomMax: number;
-  randomMin: number;
   svs: SvType[];
 }>;
 
@@ -87,7 +83,7 @@ export const FormSvs: React.FC<Props> = (props) => {
             type='button'
             color='blue'
             onClick={appendSvs}
-            renderInput={() => <InputButtonItem ref={countRef} placeholder='　' />}
+            renderInput={() => <InputButtonItem ref={countRef} placeholder=' ' />}
           >
             登録
           </InputButton>
@@ -152,7 +148,7 @@ export const FormSvs: React.FC<Props> = (props) => {
           }}
         </FixedSizeList>
         <CheckBox<FormSvsType>
-          id='isRandom'
+          id='sv-isRandom'
           name='isRandom'
           value='random'
           placeholder='送信たびにランダムにデータを変換する。'

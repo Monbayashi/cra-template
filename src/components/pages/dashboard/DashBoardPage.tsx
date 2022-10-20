@@ -1,3 +1,6 @@
+import { CommandScheduleEcosystem } from '../../ecosystems/command-schedule/CommandScheduleEcosystem';
+import { ConnectionWsEcosystem } from '../../ecosystems/connection-ws/ConnectionWsEcosystem';
+import { SettingValueEcosystem } from '../../ecosystems/setting-value/SettingValueEcosystem';
 import { Header } from '../../organisms/layouts/headers/Header';
 import { Main } from '../../organisms/layouts/mains/Main';
 import { SideBar } from '../../organisms/layouts/sidebars/SideBar';
@@ -11,10 +14,17 @@ export const DashBoardPage: React.FC<Props> = () => (
     <Header />
     <SideBar />
     <Main>
-      <section>N-PMS設定</section>
-      <section>充放電制御指令</section>
-      <div className='grid grid-cols-1 gap-4 p-4 lg:grid-cols-2'></div>
+      <div className='m-4 lg:m-8'>
+        <ConnectionWsEcosystem />
+      </div>
+      <div className='m-4 grid grid-cols-1 gap-4 lg:m-8 lg:grid-cols-2 lg:gap-8'>
+        <div>
+          <CommandScheduleEcosystem />
+        </div>
+        <div>
+          <SettingValueEcosystem />
+        </div>
+      </div>
     </Main>
-    <footer>footer</footer>
   </div>
 );

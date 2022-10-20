@@ -50,7 +50,7 @@ export const FormWss: React.FC<Props> = (props) => {
   return (
     <Card>
       <CardHeader title='接続先設定フォーム' />
-      <form className='px-4 pb-4' onSubmit={handleSubmit(onSubmit)}>
+      <form className='p-4' onSubmit={handleSubmit(onSubmit)}>
         <LineTextInput<FormWssType>
           id='origin'
           name='origin'

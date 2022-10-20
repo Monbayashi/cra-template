@@ -162,7 +162,7 @@ export const FormTms: React.FC<Props> = (props) => {
           }}
         </FixedSizeList>
         <CheckBox<FormTmsType>
-          id='isRandom'
+          id='tm-isRandom'
           name='isRandom'
           value='random'
           placeholder='送信たびにランダムにデータを変換する。'

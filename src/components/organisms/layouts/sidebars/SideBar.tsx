@@ -8,10 +8,10 @@ export const SideBar: React.FC = () => {
       <nav className='flex grow flex-col justify-between overflow-y-auto overflow-x-hidden'>
         <ul className='flex flex-col space-y-1 py-4'>
           <SideBarTitle title='データ 確認' />
-          <SideBarLink href='/' name='Dashboard' Icon={<SideBarLinkIcon type='Home' />} />
+          <SideBarLink href='/' name='N-PMS 設定データ' Icon={<SideBarLinkIcon type='Home' />} />
           <SideBarTitle title='データ 送信' />
           <SideBarLink
-            href='/messages'
+            href='/registdata'
             name='計測状態値記録'
             Icon={<SideBarLinkIcon type='Message' />}
           />

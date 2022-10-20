@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -53,9 +54,9 @@ export const FormCycle: React.FC<Props> = (props) => {
     });
   };
 
-  const send = () => {
-    props.sendHandling();
-  };
+  useEffect(() => {
+    console.log('FormCycle');
+  });
 
   return (
     <Card>
@@ -75,14 +76,9 @@ export const FormCycle: React.FC<Props> = (props) => {
           register={register}
           error={errors.sendCycle?.message}
         />
-        <div className='flex justify-between'>
-          <SimpleButton type='submit' color='blue'>
-            設定
-          </SimpleButton>
-          <SimpleButton type='button' color='green' onClick={send}>
-            手動送信
-          </SimpleButton>
-        </div>
+        <SimpleButton type='submit' color='blue'>
+          設定
+        </SimpleButton>
       </form>
     </Card>
   );

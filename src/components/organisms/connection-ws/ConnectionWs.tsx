@@ -30,18 +30,14 @@ export const ConnectionWs: React.FC<Props> = (props) => {
   return (
     <Card>
       <CardHeader title='Websocket コネクション' />
-      <div className='px-4 pb-2'>
+      <div className='p-4'>
         <div className='overflow-hidden text-gray-200'>
           <span className='whitespace-nowrap'>{urlOrigin}</span>
           <span className='whitespace-nowrap'>{urlQueryDevice}</span>
           <span className='whitespace-nowrap'>{urlQuerySeckey}</span>
         </div>
         <div className='flex items-end justify-between'>
-          <div>
-            <span className='text-white'>状態 :</span>
-            <span className={classNames[statusClassName]}>{statusName}</span>
-          </div>
-          <div className='mt-3 flex justify-end space-x-1'>
+          <div className='mt-3 flex justify-end space-x-4'>
             <SimpleButton
               color='blue'
               type='button'
@@ -58,6 +54,10 @@ export const ConnectionWs: React.FC<Props> = (props) => {
             >
               切断
             </SimpleButton>
+          </div>
+          <div>
+            <span className='text-white'>状態 :</span>
+            <span className={classNames[statusClassName]}>{statusName}</span>
           </div>
         </div>
       </div>
