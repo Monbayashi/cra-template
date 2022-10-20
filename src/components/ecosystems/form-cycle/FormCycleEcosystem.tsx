@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
 import { useCycleSetting } from '../../../contexts/CycleSettingContext';
-import { useWebsocketSetting } from '../../../contexts/WebsocketSettingContext';
 import { FormCycle } from '../../organisms/form-cycle/FormCycle';
 
 type Props = {
