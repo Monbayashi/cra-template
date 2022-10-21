@@ -4,6 +4,7 @@ import { CardHeader } from '../../parts/cards/CardHeader';
 type Props = {
   time: string;
   datas: {
+    dispAt: string;
     at: string;
     duration: string;
     value: string;
@@ -27,7 +28,7 @@ export const CommandSchedule: React.FC<Props> = ({ time, datas }) => {
           <tbody>
             {datas.map((data) => (
               <tr key={`${data.at}_${data.duration}_${data.value}`} className='text-gray-100'>
-                <td className='whitespace-nowrap px-4 align-middle'>{data.at}</td>
+                <td className='whitespace-nowrap px-4 align-middle'>{data.dispAt}</td>
                 <td className='whitespace-nowrap px-4 align-middle'>{data.duration}</td>
                 <td className='whitespace-nowrap px-4 align-middle'>{data.value}</td>
               </tr>

@@ -19,10 +19,10 @@ export const DashBoardPage: React.FC<Props> = () => (
       </div>
       <div className='m-4 grid grid-cols-1 gap-4 lg:m-8 lg:grid-cols-2 lg:gap-8'>
         <div>
-          <CommandScheduleEcosystem />
+          <SettingValueEcosystem />
         </div>
         <div>
-          <SettingValueEcosystem />
+          <CommandScheduleEcosystem />
         </div>
       </div>
     </Main>

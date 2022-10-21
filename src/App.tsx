@@ -9,6 +9,7 @@ import { CycleSettingProvider } from './contexts/CycleSettingContext';
 import { SettingValueProvider } from './contexts/SettingValueContext';
 import { SvSettingProvider } from './contexts/SvSettingContext';
 import { TmSettingProvider } from './contexts/TmSettingContext';
+import { WebSocketContextProvider } from './contexts/WebsocketContext';
 import { WebsocketSettingProvider } from './contexts/WebsocketSettingContext';
 
 function App() {
@@ -20,12 +21,14 @@ function App() {
             <SvSettingProvider>
               <SettingValueProvider>
                 <CommandScheduleProvider>
-                  <Routes>
-                    <Route path='/' element={<DashBoardPage />} />
-                    <Route path='/registdata' element={<RegistDataPage />} />
-                    <Route path='/settings' element={<SettingsPage />} />
-                    <Route path='*' element={<NotFoundPage />} />
-                  </Routes>
+                  <WebSocketContextProvider>
+                    <Routes>
+                      <Route path='/' element={<DashBoardPage />} />
+                      <Route path='/registdata' element={<RegistDataPage />} />
+                      <Route path='/settings' element={<SettingsPage />} />
+                      <Route path='*' element={<NotFoundPage />} />
+                    </Routes>
+                  </WebSocketContextProvider>
                 </CommandScheduleProvider>
               </SettingValueProvider>
             </SvSettingProvider>
