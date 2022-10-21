@@ -111,7 +111,6 @@ const WebSocketContextProvider = ({ children }: ProviderProps) => {
 
   const stateValue = { status };
   const stateHandling = { wsConnect, wsDisConnect, wsRegistData };
-
   return (
     <WebSocketEventsContext.Provider value={stateHandling}>
       <WebSocketStatesContext.Provider value={stateValue}>

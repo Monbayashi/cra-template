@@ -27,7 +27,8 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 
-const SvSettingContext = createContext<{ state: State; dispatch: Dispatch } | undefined>(undefined);
+const SvSettingEventsContext = createContext<Dispatch | undefined>(undefined);
+const SvSettingStatesContext = createContext<State | undefined>(undefined);
 
 const svSettingReducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -59,17 +60,27 @@ const SvSettingProvider = ({ children }: ProviderProps) => {
     svs: [{ id: uuidv4(), name: 'SV1', value: 1 }],
   });
 
-  const value = { state, dispatch };
-
-  return <SvSettingContext.Provider value={value}>{children}</SvSettingContext.Provider>;
+  return (
+    <SvSettingEventsContext.Provider value={dispatch}>
+      <SvSettingStatesContext.Provider value={state}>{children}</SvSettingStatesContext.Provider>
+    </SvSettingEventsContext.Provider>
+  );
 };
 
-const useSvSetting = () => {
-  const context = useContext(SvSettingContext);
+const useSvSettingStates = () => {
+  const context = useContext(SvSettingStatesContext);
   if (context === undefined) {
-    throw new Error('useSvSetting must be used within a SvSettingProvider');
+    throw new Error('useSvSettingState must be used within a SvSettingProvider');
   }
   return context;
 };
 
-export { SvSettingProvider, useSvSetting };
+const useSvSettingEvents = () => {
+  const context = useContext(SvSettingEventsContext);
+  if (context === undefined) {
+    throw new Error('useSvSettingEvent must be used within a SvSettingProvider');
+  }
+  return context;
+};
+
+export { SvSettingProvider, useSvSettingEvents, useSvSettingStates };

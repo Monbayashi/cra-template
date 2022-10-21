@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { useSvSetting } from '../../../contexts/SvSettingContext';
+import { useSvSettingEvents, useSvSettingStates } from '../../../contexts/SvSettingContext';
 import { FormSvs } from '../../organisms/form-svs/FormSvs';
 
 type Props = {
@@ -8,7 +8,8 @@ type Props = {
 };
 
 export const FormSvsEcosystem: React.FC<Props> = () => {
-  const { state, dispatch } = useSvSetting();
+  const state = useSvSettingStates();
+  const dispatch = useSvSettingEvents();
 
   const updateHandling = useCallback(
     ({

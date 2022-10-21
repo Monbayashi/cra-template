@@ -28,9 +28,9 @@ export const CommandSchedule: React.FC<Props> = ({ time, datas }) => {
           <tbody>
             {datas.map((data) => (
               <tr key={`${data.at}_${data.duration}_${data.value}`} className='text-gray-100'>
-                <td className='whitespace-nowrap px-4 align-middle'>{data.dispAt}</td>
-                <td className='whitespace-nowrap px-4 align-middle'>{data.duration}</td>
-                <td className='whitespace-nowrap px-4 align-middle'>{data.value}</td>
+                <td className='whitespace-nowrap px-4 py-2 align-middle'>{data.dispAt}</td>
+                <td className='whitespace-nowrap px-4 py-2 align-middle'>{data.duration}</td>
+                <td className='whitespace-nowrap px-4 py-2 align-middle'>{data.value}</td>
               </tr>
             ))}
           </tbody>

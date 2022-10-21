@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { useTmSetting } from '../../../contexts/TmSettingContext';
+import { useTmSettingEvents, useTmSettingStates } from '../../../contexts/TmSettingContext';
 import { FormTms } from '../../organisms/form-tms/FormTms';
 
 type Props = {
@@ -8,7 +8,8 @@ type Props = {
 };
 
 export const FormTmsEcosystem: React.FC<Props> = () => {
-  const { state, dispatch } = useTmSetting();
+  const state = useTmSettingStates();
+  const dispatch = useTmSettingEvents();
 
   const updateHandling = useCallback(
     ({

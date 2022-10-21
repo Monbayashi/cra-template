@@ -12,28 +12,35 @@ import { TmSettingProvider } from './contexts/TmSettingContext';
 import { WebSocketContextProvider } from './contexts/WebsocketContext';
 import { WebsocketSettingProvider } from './contexts/WebsocketSettingContext';
 
+/**
+ *  CycleSettingProvider dipendency [WebSocketContextProvider, TmSettingProvider, SvSettingProvider];
+ *  WebSocketContextProvider dipendency [WebsocketSettingProvider, SettingValueProvider, CommandScheduleProvider];
+ * @returns
+ */
 function App() {
   return (
     <Router>
       <WebsocketSettingProvider>
-        <CycleSettingProvider>
-          <TmSettingProvider>
-            <SvSettingProvider>
-              <SettingValueProvider>
-                <CommandScheduleProvider>
-                  <WebSocketContextProvider>
+        <SettingValueProvider>
+          <CommandScheduleProvider>
+            <WebSocketContextProvider>
+              {/* 区切り */}
+              <TmSettingProvider>
+                <SvSettingProvider>
+                  <CycleSettingProvider>
                     <Routes>
                       <Route path='/' element={<DashBoardPage />} />
                       <Route path='/registdata' element={<RegistDataPage />} />
                       <Route path='/settings' element={<SettingsPage />} />
                       <Route path='*' element={<NotFoundPage />} />
                     </Routes>
-                  </WebSocketContextProvider>
-                </CommandScheduleProvider>
-              </SettingValueProvider>
-            </SvSettingProvider>
-          </TmSettingProvider>
-        </CycleSettingProvider>
+                  </CycleSettingProvider>
+                </SvSettingProvider>
+              </TmSettingProvider>
+              {/* 区切り */}
+            </WebSocketContextProvider>
+          </CommandScheduleProvider>
+        </SettingValueProvider>
       </WebsocketSettingProvider>
     </Router>
   );

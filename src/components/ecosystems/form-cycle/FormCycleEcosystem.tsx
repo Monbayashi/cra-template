@@ -1,6 +1,9 @@
 import { useCallback, useEffect } from 'react';
 
-import { useCycleSetting } from '../../../contexts/CycleSettingContext';
+import {
+  useCycleSettingEvents,
+  useCycleSettingStates,
+} from '../../../contexts/CycleSettingContext';
 import { FormCycle } from '../../organisms/form-cycle/FormCycle';
 
 type Props = {
@@ -8,7 +11,8 @@ type Props = {
 };
 
 export const FormCycleEcosystem: React.FC<Props> = () => {
-  const { state, dispatch } = useCycleSetting();
+  const state = useCycleSettingStates();
+  const dispatch = useCycleSettingEvents();
 
   const updateHandling = useCallback(
     ({ isAutoSend, sendCycle }: { isAutoSend: boolean; sendCycle: number }) => {
@@ -16,10 +20,6 @@ export const FormCycleEcosystem: React.FC<Props> = () => {
     },
     [],
   );
-
-  useEffect(() => {
-    console.log('FormCycleEcosystem');
-  });
 
   return (
     <FormCycle

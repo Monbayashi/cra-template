@@ -54,10 +54,6 @@ export const FormCycle: React.FC<Props> = (props) => {
     });
   };
 
-  useEffect(() => {
-    console.log('FormCycle');
-  });
-
   return (
     <Card>
       <CardHeader title='送信フォーム' />

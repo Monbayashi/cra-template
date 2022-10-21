@@ -165,7 +165,7 @@ export const FormTms: React.FC<Props> = (props) => {
           id='tm-isRandom'
           name='isRandom'
           value='random'
-          placeholder='送信たびにランダムにデータを変換する。'
+          placeholder='送信前にランダムな値に変換する。'
           register={register}
         />
         <LineTextInput<FormTmsType>

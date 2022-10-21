@@ -31,7 +31,8 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 
-const TmSettingContext = createContext<{ state: State; dispatch: Dispatch } | undefined>(undefined);
+const TmSettingEventsContext = createContext<Dispatch | undefined>(undefined);
+const TmSettingStatesContext = createContext<State | undefined>(undefined);
 
 const tmSettingReducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -67,17 +68,27 @@ const TmSettingProvider = ({ children }: ProviderProps) => {
     tms: [{ id: uuidv4(), name: 'TM1', value: 1 }],
   });
 
-  const value = { state, dispatch };
-
-  return <TmSettingContext.Provider value={value}>{children}</TmSettingContext.Provider>;
+  return (
+    <TmSettingEventsContext.Provider value={dispatch}>
+      <TmSettingStatesContext.Provider value={state}>{children}</TmSettingStatesContext.Provider>
+    </TmSettingEventsContext.Provider>
+  );
 };
 
-const useTmSetting = () => {
-  const context = useContext(TmSettingContext);
+const useTmSettingStates = () => {
+  const context = useContext(TmSettingStatesContext);
   if (context === undefined) {
-    throw new Error('useTmSetting must be used within a TmSettingProvider');
+    throw new Error('useTmSettingState must be used within a TmSettingProvider');
   }
   return context;
 };
 
-export { TmSettingProvider, useTmSetting };
+const useTmSettingEvents = () => {
+  const context = useContext(TmSettingEventsContext);
+  if (context === undefined) {
+    throw new Error('useTmSettingEvent must be used within a TmSettingProvider');
+  }
+  return context;
+};
+
+export { TmSettingProvider, useTmSettingStates, useTmSettingEvents };
