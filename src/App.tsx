@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { DashBoardPage } from './components/pages/dashboard/DashBoardPage';
 import { NotFoundPage } from './components/pages/not-found-404/NotFoundPage';
