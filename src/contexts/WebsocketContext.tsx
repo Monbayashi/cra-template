@@ -62,39 +62,42 @@ const WebSocketContextProvider = ({ children }: ProviderProps) => {
   const commandScheduleDispatch = useCommandScheduleEvents();
 
   // websocket接続
-  const wsConnect = useCallback((url: string) => {
-    const socket = new WebSocket(url);
-    // コネクションオープンイベント
-    socket.onopen = () => {
-      setStatus(1);
-      const resendshedule = { event: 'resendschedule', data: [{ at: createAtTimeMin() }] };
-      setTimeout(() => socket.send(JSON.stringify(resendshedule)), 500);
-    };
-    // コネクションクローズイベント
-    socket.onclose = () => setStatus(0);
-    // メッセージ受信イベント
-    socket.onmessage = (ent) => {
-      const objMsg = JSON.parse(ent.data) as ControllerMessage | SettingMessage;
-      if (objMsg.event === 'setting') {
-        // N-PMS設定 イベント
-        if (objMsg.data.length === 0) return;
-        const resDatas = Object.entries(objMsg.data[0]).map(([key, value]) => ({
-          dbName: key,
-          value,
-        }));
-        settingValueDispatch({ type: 'update', time: createNowUpdateTime(), datas: resDatas });
-      } else if (objMsg.event === 'controller') {
-        // 充放電制御指令 イベント
-        if (objMsg.data.length === 0) return;
-        const resDatas = objMsg.data;
-        commandScheduleDispatch({ type: 'update', time: createNowUpdateTime(), datas: resDatas });
-      } else {
-        console.error('UNKOWN EVENT RECIVE'); // 未想定
-      }
-    };
-    socket.onerror = (ev) => console.error(ev);
-    ws.current = socket;
-  }, []);
+  const wsConnect = useCallback(
+    (url: string) => {
+      const socket = new WebSocket(url);
+      // コネクションオープンイベント
+      socket.onopen = () => {
+        setStatus(1);
+        const resendshedule = { event: 'resendschedule', data: [{ at: createAtTimeMin() }] };
+        setTimeout(() => socket.send(JSON.stringify(resendshedule)), 500);
+      };
+      // コネクションクローズイベント
+      socket.onclose = () => setStatus(0);
+      // メッセージ受信イベント
+      socket.onmessage = (ent) => {
+        const objMsg = JSON.parse(ent.data) as ControllerMessage | SettingMessage;
+        if (objMsg.event === 'setting') {
+          // N-PMS設定 イベント
+          if (objMsg.data.length === 0) return;
+          const resDatas = Object.entries(objMsg.data[0]).map(([key, value]) => ({
+            dbName: key,
+            value,
+          }));
+          settingValueDispatch({ type: 'update', time: createNowUpdateTime(), datas: resDatas });
+        } else if (objMsg.event === 'controller') {
+          // 充放電制御指令 イベント
+          if (objMsg.data.length === 0) return;
+          const resDatas = objMsg.data;
+          commandScheduleDispatch({ type: 'update', time: createNowUpdateTime(), datas: resDatas });
+        } else {
+          console.error('UNKOWN EVENT RECIVE'); // 未想定
+        }
+      };
+      socket.onerror = (ev) => console.error(ev);
+      ws.current = socket;
+    },
+    [settingValueDispatch, commandScheduleDispatch],
+  );
 
   // websocket切断
   const wsDisConnect = useCallback(() => {

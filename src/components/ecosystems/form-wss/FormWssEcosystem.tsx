@@ -14,7 +14,7 @@ export const FormWssEcosystem: React.FC<Props> = () => {
     ({ origin, deviceId, secKey }: { origin: string; deviceId: string; secKey: string }) => {
       dispatch({ type: 'update', origin, deviceId, secKey });
     },
-    [],
+    [dispatch],
   );
 
   return (

@@ -25,7 +25,7 @@ export const FormTmsEcosystem: React.FC<Props> = () => {
     }) => {
       dispatch({ type: 'update', isRandom, randomMax, randomMin, tms });
     },
-    [],
+    [dispatch],
   );
 
   return (

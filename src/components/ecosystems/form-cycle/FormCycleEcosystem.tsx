@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 import {
   useCycleSettingEvents,
@@ -18,7 +18,7 @@ export const FormCycleEcosystem: React.FC<Props> = () => {
     ({ isAutoSend, sendCycle }: { isAutoSend: boolean; sendCycle: number }) => {
       dispatch({ type: 'update', isAutoSend, sendCycle });
     },
-    [],
+    [dispatch],
   );
 
   return (

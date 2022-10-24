@@ -21,7 +21,7 @@ export const FormSvsEcosystem: React.FC<Props> = () => {
     }) => {
       dispatch({ type: 'update', isRandom, svs });
     },
-    [],
+    [dispatch],
   );
 
   return <FormSvs registerHandling={updateHandling} isRandom={state.isRandom} svs={state.svs} />;
