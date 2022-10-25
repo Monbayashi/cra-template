@@ -7,7 +7,7 @@ import { useSettingValueEvents } from './SettingValueContext';
 type Dispatch = {
   wsConnect: (url: string) => void;
   wsDisConnect: () => void;
-  wsRegistData: (datas: { [key: string]: string }[]) => void;
+  wsRegistData: (datas: { [key: string]: string }) => void;
 };
 
 type State = {
@@ -106,7 +106,7 @@ const WebSocketContextProvider = ({ children }: ProviderProps) => {
   }, []);
 
   // websocket要求
-  const wsRegistData = useCallback((datas: { [key: string]: string }[]) => {
+  const wsRegistData = useCallback((datas: { [key: string]: string }) => {
     if (!ws.current || ws.current.readyState !== 1) return;
     const registData = { event: 'registdata', data: [{ ...datas, at: createAtTimeSec() }] };
     ws.current.send(JSON.stringify(registData));

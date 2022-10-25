@@ -68,7 +68,7 @@ const CycleSettingProvider = ({ children }: ProviderProps) => {
         : cur.value.toString();
       return result;
     }, {} as { [key: string]: string });
-    webSocketEvent.wsRegistData([{ ...resultTm, ...resultSv }]);
+    webSocketEvent.wsRegistData({ ...resultTm, ...resultSv });
   }, [webSocketEvent, tmSettingState, svSettingState]);
 
   useEffect(() => {
