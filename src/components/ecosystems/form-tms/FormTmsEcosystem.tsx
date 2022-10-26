@@ -42,7 +42,6 @@ export const FormTmsEcosystem: React.FC<Props> = () => {
   const selectLoadDataHandling = useCallback(
     (id: string) => {
       const findData = storage.getFindOne(id);
-      console.log(findData);
       if (!findData) return;
       dispatch({
         type: 'update',

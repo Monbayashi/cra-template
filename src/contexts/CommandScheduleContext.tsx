@@ -36,7 +36,6 @@ const CommandScheduleReducer = (state: State, action: Action): State => {
     case 'update': {
       const sortActionDatas = action.datas.sort((a, b) => (a.at > b.at ? 1 : -1));
       const olderSortActionDataAt = sortActionDatas[0].at;
-      console.log(sortActionDatas);
       const sortStateDatas = state.datas.sort((a, b) => (a.at > b.at ? 1 : -1));
       const filterStateDatas = sortStateDatas.filter(
         (sData) => sData.at < olderSortActionDataAt && sData.at >= createAtTimeMin(),

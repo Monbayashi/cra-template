@@ -52,7 +52,6 @@ export const FormWss: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    console.log('effect');
     reset({
       origin: props.origin,
       deviceId: props.deviceId,
