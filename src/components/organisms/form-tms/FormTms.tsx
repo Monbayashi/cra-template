@@ -5,6 +5,7 @@ import { FixedSizeList } from 'react-window';
 import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
+import { FileReadEx } from '../../../utils/fileReadEx';
 import { InputButton, InputButtonItem } from '../../parts/buttons/InputButton';
 import { SimpleButton } from '../../parts/buttons/SimpleButton.parts';
 import { Card } from '../../parts/cards/Card';
@@ -41,6 +42,8 @@ type FormTmsType = Readonly<{
 }>;
 
 export const FormTms: React.FC<Props> = (props) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const {
     register,
     control,
@@ -48,6 +51,7 @@ export const FormTms: React.FC<Props> = (props) => {
     clearErrors,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<FormTmsType>({
     resolver: yupResolver(formTmsSchema),
     reValidateMode: 'onSubmit',
@@ -93,9 +97,32 @@ export const FormTms: React.FC<Props> = (props) => {
     });
   };
 
+  // const loadCSV;
+  const onLoadCSVClick = () => {
+    inputRef.current?.click();
+  };
+
+  const onFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const fileObj = event.target.files && event.target.files[0];
+    if (!fileObj) return;
+    const csvString = await new FileReadEx().readAsText(fileObj);
+    const rows = csvString.split('\r\n');
+    const csvArray = rows.map((row) => row.split(',')).filter((row) => row.length === 2);
+    const tms = csvArray.map((item) => {
+      const name = item[0] || '';
+      const value = item[1] ? parseInt(item[1]) : 0;
+      return { id: uuidv4(), name, value };
+    });
+    setValue('tms', tms);
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+  };
+
   return (
     <Card>
       <CardHeader title='数値設定フォーム' />
+      <input type='file' accept='.csv' className='hidden' ref={inputRef} onChange={onFileChange} />
       <form className='p-4' onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-wrap space-x-2'>
           <SimpleButton
@@ -115,6 +142,9 @@ export const FormTms: React.FC<Props> = (props) => {
           </InputButton>
           <SimpleButton type='button' color='red' onClick={() => remove()}>
             削除
+          </SimpleButton>
+          <SimpleButton type='button' color='green' onClick={onLoadCSVClick}>
+            CSV読込
           </SimpleButton>
         </div>
 
