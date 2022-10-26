@@ -12,6 +12,8 @@ const Template: ComponentStory<typeof FormSvs> = (args) => <FormSvs {...args} />
 
 export const Default = Template.bind({});
 Default.args = {
+  saveModalOpenHandling: () => console.log('saveModalOpenHandling'),
+  loadModalOpenHandling: () => console.log('loadModalOpenHandling'),
   registerHandling: (args) => console.log(args),
   isRandom: true,
   svs: [

@@ -12,6 +12,8 @@ const Template: ComponentStory<typeof FormWss> = (args) => <FormWss {...args} />
 
 export const Default = Template.bind({});
 Default.args = {
+  saveModalOpenHandling: () => console.log('saveModalOpenHandling'),
+  loadModalOpenHandling: () => console.log('loadModalOpenHandling'),
   registerHandling: (args) => console.log(args),
   origin: 'ws://000.000.000.000:00000',
   deviceId: 'TEST-0000000000',

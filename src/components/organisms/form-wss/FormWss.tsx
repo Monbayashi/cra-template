@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -8,6 +9,8 @@ import { CardHeader } from '../../parts/cards/CardHeader';
 import { LineTextInput } from '../../parts/form/LineTextInput';
 
 type Props = {
+  saveModalOpenHandling: () => void;
+  loadModalOpenHandling: () => void;
   registerHandling: (args: { origin: string; deviceId: string; secKey: string }) => void;
   origin: string;
   deviceId: string;
@@ -33,6 +36,7 @@ export const FormWss: React.FC<Props> = (props) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormWssType>({
     resolver: yupResolver(formWssSchema),
@@ -46,6 +50,15 @@ export const FormWss: React.FC<Props> = (props) => {
   const onSubmit: SubmitHandler<FormWssType> = (data) => {
     props.registerHandling(data);
   };
+
+  useEffect(() => {
+    console.log('effect');
+    reset({
+      origin: props.origin,
+      deviceId: props.deviceId,
+      secKey: props.secKey,
+    });
+  }, [reset, props.origin, props.deviceId, props.secKey]);
 
   return (
     <Card>
@@ -72,9 +85,19 @@ export const FormWss: React.FC<Props> = (props) => {
           register={register}
           error={errors.secKey?.message}
         />
-        <SimpleButton type='submit' color='blue'>
-          設定
-        </SimpleButton>
+        <div className='flex justify-between'>
+          <SimpleButton type='submit' color='blue'>
+            設定
+          </SimpleButton>
+          <div className='space-x-2'>
+            <SimpleButton type='button' color='red' onClick={props.saveModalOpenHandling}>
+              Save
+            </SimpleButton>
+            <SimpleButton type='button' color='green' onClick={props.loadModalOpenHandling}>
+              Load
+            </SimpleButton>
+          </div>
+        </div>
       </form>
     </Card>
   );

@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useForm, SubmitHandler, useFieldArray, Controller } from 'react-hook-form';
 import { FixedSizeList } from 'react-window';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,6 +12,8 @@ import { CardHeader } from '../../parts/cards/CardHeader';
 import { CheckBox } from '../../parts/form/CheckBox';
 
 type Props = {
+  saveModalOpenHandling: () => void;
+  loadModalOpenHandling: () => void;
   registerHandling: (args: { isRandom: boolean; svs: SvType[] }) => void;
   isRandom: boolean;
   svs: SvType[];
@@ -35,6 +37,7 @@ export const FormSvs: React.FC<Props> = (props) => {
     handleSubmit,
     clearErrors,
     formState: { errors },
+    reset,
   } = useForm<FormSvsType>({
     resolver: yupResolver(formSvsSchema),
     reValidateMode: 'onSubmit',
@@ -43,6 +46,13 @@ export const FormSvs: React.FC<Props> = (props) => {
       svs: props.svs,
     },
   });
+
+  useEffect(() => {
+    reset({
+      isRandom: props.isRandom ? 'random' : '',
+      svs: props.svs,
+    });
+  }, [reset, props.isRandom, props.svs]);
 
   const countRef = useRef<HTMLInputElement | null>(null);
   const { fields, append, remove, replace } = useFieldArray({ control, name: 'svs' });
@@ -154,9 +164,19 @@ export const FormSvs: React.FC<Props> = (props) => {
           placeholder='送信前にランダムな値に変換する。'
           register={register}
         />
-        <SimpleButton type='submit' color='blue'>
-          設定
-        </SimpleButton>
+        <div className='flex justify-between'>
+          <SimpleButton type='submit' color='blue'>
+            設定
+          </SimpleButton>
+          <div className='space-x-2'>
+            <SimpleButton type='button' color='red' onClick={props.saveModalOpenHandling}>
+              Save
+            </SimpleButton>
+            <SimpleButton type='button' color='green' onClick={props.loadModalOpenHandling}>
+              Load
+            </SimpleButton>
+          </div>
+        </div>
       </form>
     </Card>
   );

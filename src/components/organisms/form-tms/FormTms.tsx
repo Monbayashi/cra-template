@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useForm, SubmitHandler, useFieldArray, Controller } from 'react-hook-form';
 import { FixedSizeList } from 'react-window';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,6 +13,8 @@ import { CheckBox } from '../../parts/form/CheckBox';
 import { LineTextInput } from '../../parts/form/LineTextInput';
 
 type Props = {
+  saveModalOpenHandling: () => void;
+  loadModalOpenHandling: () => void;
   registerHandling: (args: {
     isRandom: boolean;
     randomMax: number;
@@ -45,6 +47,7 @@ export const FormTms: React.FC<Props> = (props) => {
     handleSubmit,
     clearErrors,
     formState: { errors },
+    reset,
   } = useForm<FormTmsType>({
     resolver: yupResolver(formTmsSchema),
     reValidateMode: 'onSubmit',
@@ -55,6 +58,15 @@ export const FormTms: React.FC<Props> = (props) => {
       tms: props.tms,
     },
   });
+
+  useEffect(() => {
+    reset({
+      isRandom: props.isRandom ? 'random' : '',
+      randomMax: props.randomMax,
+      randomMin: props.randomMin,
+      tms: props.tms,
+    });
+  }, [reset, props.isRandom, props.randomMin, props.randomMax, props.tms]);
 
   const countRef = useRef<HTMLInputElement | null>(null);
   const { fields, append, remove, replace } = useFieldArray({ control, name: 'tms' });
@@ -182,9 +194,19 @@ export const FormTms: React.FC<Props> = (props) => {
           register={register}
           error={errors.randomMin?.message}
         />
-        <SimpleButton type='submit' color='blue'>
-          設定
-        </SimpleButton>
+        <div className='flex justify-between'>
+          <SimpleButton type='submit' color='blue'>
+            設定
+          </SimpleButton>
+          <div className='space-x-2'>
+            <SimpleButton type='button' color='red' onClick={props.saveModalOpenHandling}>
+              Save
+            </SimpleButton>
+            <SimpleButton type='button' color='green' onClick={props.loadModalOpenHandling}>
+              Load
+            </SimpleButton>
+          </div>
+        </div>
       </form>
     </Card>
   );
