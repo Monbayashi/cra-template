@@ -2,6 +2,7 @@ import { ConnectionWsEcosystem } from '../../ecosystems/connection-ws/Connection
 import { FormCycleEcosystem } from '../../ecosystems/form-cycle/FormCycleEcosystem';
 import { FormSvsEcosystem } from '../../ecosystems/form-svs/FormSvsEcosystem';
 import { FormTmsEcosystem } from '../../ecosystems/form-tms/FormTmsEcosystem';
+import { LogWssEcosystem } from '../../ecosystems/log-wss/LogWssEcosystem';
 import { Header } from '../../organisms/layouts/headers/Header';
 import { Main } from '../../organisms/layouts/mains/Main';
 import { SideBar } from '../../organisms/layouts/sidebars/SideBar';
@@ -23,12 +24,15 @@ export const RegistDataPage: React.FC<Props> = () => (
           <FormCycleEcosystem />
         </div>
       </div>
-      <div className='m-4 grid grid-cols-1 gap-4 lg:m-8 lg:gap-8 2xl:grid-cols-2'>
-        <div className='flex items-stretch 2xl:col-span-1'>
+      <div className='m-4 grid grid-cols-1 gap-4 lg:m-8 lg:gap-8 xl:grid-cols-2 2xl:grid-cols-3'>
+        <div>
           <FormSvsEcosystem />
         </div>
-        <div className='flex items-stretch 2xl:col-span-1'>
+        <div>
           <FormTmsEcosystem />
+        </div>
+        <div className='col-span-1 xl:col-span-2 2xl:col-span-1'>
+          <LogWssEcosystem />
         </div>
       </div>
     </Main>

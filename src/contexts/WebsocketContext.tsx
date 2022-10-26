@@ -14,6 +14,14 @@ type State = {
   status: 0 | 1;
 };
 
+type LogState = {
+  logs: {
+    logAt: string;
+    logMsg: string;
+    logData: string;
+  }[];
+};
+
 type ProviderProps = {
   children: React.ReactNode;
 };
@@ -51,12 +59,14 @@ type ControllerMessage = {
   }[];
 };
 
+const WebSocketLogsContext = createContext<LogState | undefined>(undefined);
 const WebSocketEventsContext = createContext<Dispatch | undefined>(undefined);
 const WebSocketStatesContext = createContext<State | undefined>(undefined);
 
 const WebSocketContextProvider = ({ children }: ProviderProps) => {
   const ws = useRef<WebSocket | null>(null);
   const [status, setStatus] = useState<0 | 1>(0);
+  const [logs, setLogs] = useState<LogState['logs']>([]);
   // useContext
   const settingValueDispatch = useSettingValueEvents();
   const commandScheduleDispatch = useCommandScheduleEvents();
@@ -68,21 +78,35 @@ const WebSocketContextProvider = ({ children }: ProviderProps) => {
       // コネクションオープンイベント
       socket.onopen = () => {
         setStatus(1);
+        const logAt = createNowUpdateTime();
+        const logMsg = 'Websocketコネクション OPEN';
+        const logData = socket.url;
+        setLogs((pre) => [{ logAt, logMsg, logData }, ...pre].splice(0, 100));
         const resendshedule = { event: 'resendschedule', data: [{ at: createAtTimeMin() }] };
-        setTimeout(() => socket.send(JSON.stringify(resendshedule)), 500);
+        setTimeout(() => {
+          socket.send(JSON.stringify(resendshedule));
+          const logAt = createNowUpdateTime();
+          const logMsg = 'resendscheduleイベント送信';
+          const logData = JSON.stringify(resendshedule, null, 2);
+          setLogs((pre) => [{ logAt, logMsg, logData }, ...pre].splice(0, 100));
+        }, 500);
       };
       // コネクションクローズイベント
-      socket.onclose = () => setStatus(0);
+      socket.onclose = () => {
+        setStatus(0);
+        const logAt = createNowUpdateTime();
+        const logMsg = 'Websocketコネクション CLOSE';
+        const logData = socket.url;
+        setLogs((pre) => [{ logAt, logMsg, logData }, ...pre].splice(0, 100));
+      };
       // メッセージ受信イベント
       socket.onmessage = (ent) => {
         const objMsg = JSON.parse(ent.data) as ControllerMessage | SettingMessage;
         if (objMsg.event === 'setting') {
           // N-PMS設定 イベント
           if (objMsg.data.length === 0) return;
-          const resDatas = Object.entries(objMsg.data[0]).map(([key, value]) => ({
-            dbName: key,
-            value,
-          }));
+          const entries = Object.entries(objMsg.data[0]);
+          const resDatas = entries.map(([key, value]) => ({ dbName: key, value }));
           settingValueDispatch({ type: 'update', time: createNowUpdateTime(), datas: resDatas });
         } else if (objMsg.event === 'controller') {
           // 充放電制御指令 イベント
@@ -92,6 +116,10 @@ const WebSocketContextProvider = ({ children }: ProviderProps) => {
         } else {
           console.error('UNKOWN EVENT RECIVE'); // 未想定
         }
+        const logAt = createNowUpdateTime();
+        const logMsg = `${objMsg.event}イベント受信`;
+        const logData = JSON.stringify(objMsg, null, 2);
+        setLogs((pre) => [{ logAt, logMsg, logData }, ...pre].splice(0, 100));
       };
       socket.onerror = (ev) => console.error(ev);
       ws.current = socket;
@@ -110,16 +138,23 @@ const WebSocketContextProvider = ({ children }: ProviderProps) => {
     if (!ws.current || ws.current.readyState !== 1) return;
     const registData = { event: 'registdata', data: [{ ...datas, at: createAtTimeSec() }] };
     ws.current.send(JSON.stringify(registData));
+    const logAt = createNowUpdateTime();
+    const logMsg = `${registData.event}イベント受信`;
+    const logData = JSON.stringify(registData, null, 2);
+    setLogs((pre) => [{ logAt, logMsg, logData }, ...pre].splice(0, 100));
   }, []);
 
+  const stateLogValue = { logs: logs };
   const stateValue = { status };
   const stateHandling = { wsConnect, wsDisConnect, wsRegistData };
   return (
-    <WebSocketEventsContext.Provider value={stateHandling}>
-      <WebSocketStatesContext.Provider value={stateValue}>
-        {children}
-      </WebSocketStatesContext.Provider>
-    </WebSocketEventsContext.Provider>
+    <WebSocketLogsContext.Provider value={stateLogValue}>
+      <WebSocketEventsContext.Provider value={stateHandling}>
+        <WebSocketStatesContext.Provider value={stateValue}>
+          {children}
+        </WebSocketStatesContext.Provider>
+      </WebSocketEventsContext.Provider>
+    </WebSocketLogsContext.Provider>
   );
 };
 
@@ -139,4 +174,12 @@ const useWebsocketStates = () => {
   return context;
 };
 
-export { WebSocketContextProvider, useWebsocketEvents, useWebsocketStates };
+const useWebsocketLogs = () => {
+  const context = useContext(WebSocketLogsContext);
+  if (context === undefined) {
+    throw new Error('useWebsocketLogs must be used within a WebSocketContextProvider');
+  }
+  return context;
+};
+
+export { WebSocketContextProvider, useWebsocketEvents, useWebsocketStates, useWebsocketLogs };

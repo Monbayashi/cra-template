@@ -1,22 +1,16 @@
 import { useEffect, useState } from 'react';
 
+import { createNowUpdateTime } from '../../../../utils/dateTime';
+
 /**
  * Header
  * @returns
  */
 export const Header: React.FC = () => {
-  const [time, setTime] = useState(
-    `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
-  );
+  const [time, setTime] = useState(createNowUpdateTime());
 
   useEffect(() => {
-    const timeNum = window.setInterval(() => {
-      const now = new Date();
-      const localDate = now.toLocaleDateString();
-      const localTime = now.toLocaleTimeString();
-
-      setTime(`${localDate} ${localTime}`);
-    }, 500);
+    const timeNum = window.setInterval(() => setTime(createNowUpdateTime()), 500);
     return () => window.clearInterval(timeNum);
   }, []);
 

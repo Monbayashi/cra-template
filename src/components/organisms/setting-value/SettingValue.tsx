@@ -20,7 +20,7 @@ export const SettingValue: React.FC<Props> = ({ time, datas }) => {
           <thead className='border border-x-0 border-solid border-gray-500 bg-gray-600 font-semibold text-gray-100'>
             <tr>
               <th className='whitespace-nowrap px-4 py-3 text-left align-middle'>設定名</th>
-              <th className='whitespace-nowrap px-4 py-3 text-left align-middle'>DB名</th>
+              <th className='whitespace-nowrap px-4 py-3 text-left align-middle'>項目名</th>
               <th className='whitespace-nowrap px-4 py-3 text-left align-middle'>値</th>
             </tr>
           </thead>
