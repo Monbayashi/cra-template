@@ -25,7 +25,7 @@ const formCycleSchema = yup
       .number()
       .typeError('数値を入力して下さい')
       .integer('自然数を入力して下さい')
-      .min(0, '整数値を入力して下さい')
+      .min(1000, '整数値を入力して下さい')
       .required('必須項目です'),
   });
 

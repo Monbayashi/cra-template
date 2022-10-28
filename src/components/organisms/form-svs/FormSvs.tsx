@@ -66,6 +66,7 @@ export const FormSvs: React.FC<Props> = (props) => {
     if (countRef.current == null) return;
     const nValue = Number(countRef.current.value);
     if (!Number.isInteger(nValue) || nValue < 1) return;
+    if (nValue >= 5000) return;
     const numCount = Number(countRef.current.value);
     const list = [...new Array(numCount)].map((_, index) => {
       return { id: uuidv4(), name: `SV${index + 1}`, value: 1 };

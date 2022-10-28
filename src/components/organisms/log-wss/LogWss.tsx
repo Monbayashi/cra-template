@@ -1,3 +1,4 @@
+import { SimpleButton } from '../../parts/buttons/SimpleButton.parts';
 import { Card } from '../../parts/cards/Card';
 import { CardHeader } from '../../parts/cards/CardHeader';
 
@@ -7,9 +8,10 @@ type Props = {
     logMsg: string;
     logData: string;
   }[];
+  logDataShowHandling: (log: string) => void;
 };
 
-export const LogWss: React.FC<Props> = ({ datas }) => {
+export const LogWss: React.FC<Props> = ({ datas, logDataShowHandling }) => {
   return (
     <Card>
       <CardHeader title='Websocket ログ' />
@@ -22,6 +24,7 @@ export const LogWss: React.FC<Props> = ({ datas }) => {
               <th className='whitespace-nowrap px-4 py-1.5 text-left align-middle hidden sm:table-cell'>
                 Data
               </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -30,6 +33,15 @@ export const LogWss: React.FC<Props> = ({ datas }) => {
                 <td className='px-2 align-top'>{data.logAt}</td>
                 <td className='px-2 align-top'>{data.logMsg}</td>
                 <td className='text-xs px-2 align-middle hidden sm:table-cell'>{data.logData}</td>
+                <td className=''>
+                  <SimpleButton
+                    type='button'
+                    onClick={() => logDataShowHandling(data.logData)}
+                    color='white'
+                  >
+                    !
+                  </SimpleButton>
+                </td>
               </tr>
             ))}
           </tbody>

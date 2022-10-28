@@ -14,12 +14,12 @@ export const DashBoardPage: React.FC<Props> = () => (
     <div className='m-4 lg:m-8'>
       <ConnectionWsEcosystem />
     </div>
+    <div className='m-4 lg:m-8'>
+      <LogWssEcosystem />
+    </div>
     <div className='m-4 grid grid-cols-1 gap-4 lg:m-8 lg:grid-cols-2 lg:gap-8'>
       <SettingValueEcosystem />
       <CommandScheduleEcosystem />
-    </div>
-    <div className='m-4 lg:m-8'>
-      <LogWssEcosystem />
     </div>
   </Layout>
 );

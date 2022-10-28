@@ -19,7 +19,7 @@ export const Header: React.FC = () => {
     () => (
       <div className='w-14 h-14 bg-blue-500 md:w-64 flex items-center justify-center select-none text-white'>
         <TitleIcon className='inline-block w-10 h-10' />
-        <span className='text-2xl font-bold hidden md:inline-block px-2'>Websocket</span>
+        <span className='text-2xl font-bold hidden md:inline-block px-2'>N-PMS sim</span>
       </div>
     ),
     [],
