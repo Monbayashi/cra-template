@@ -17,9 +17,11 @@ export const LogWss: React.FC<Props> = ({ datas }) => {
         <table className='w-full border-collapse items-center bg-transparent'>
           <thead className='border-x-0 border-solid border-gray-500 bg-gray-600 font-semibold text-gray-100 sticky top-0'>
             <tr>
-              <th className='whitespace-nowrap px-4 py-1.5 text-left align-middle w-44'>At</th>
-              <th className='whitespace-nowrap px-4 py-1.5 text-left align-middle w-56'>Msg</th>
-              <th className='whitespace-nowrap px-4 py-1.5 text-left align-middle'>Data</th>
+              <th className='whitespace-nowrap px-4 py-1.5 text-left align-middle sm:w-44'>At</th>
+              <th className='whitespace-nowrap px-4 py-1.5 text-left align-middle sm:w-56'>Msg</th>
+              <th className='whitespace-nowrap px-4 py-1.5 text-left align-middle hidden sm:table-cell'>
+                Data
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -27,7 +29,7 @@ export const LogWss: React.FC<Props> = ({ datas }) => {
               <tr key={`${data.logAt}_${data.logMsg}`} className='border-b border-gray-400'>
                 <td className='px-2 align-top'>{data.logAt}</td>
                 <td className='px-2 align-top'>{data.logMsg}</td>
-                <td className='text-xs px-2 align-middle overflow-hidden'>{data.logData}</td>
+                <td className='text-xs px-2 align-middle hidden sm:table-cell'>{data.logData}</td>
               </tr>
             ))}
           </tbody>
