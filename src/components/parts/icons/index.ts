@@ -4,3 +4,4 @@ export { HomeIcon } from './HomeIcon';
 export { MessageIcon } from './MessageIcon';
 export { PersonIcon } from './PersonIcon';
 export { SettingIcon } from './SettingIcon';
+export { LogoutIcon } from './LogoutIcon';
