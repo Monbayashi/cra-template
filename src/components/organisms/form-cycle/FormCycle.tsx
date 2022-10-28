@@ -72,6 +72,7 @@ export const FormCycle: React.FC<Props> = (props) => {
           register={register}
           error={errors.sendCycle?.message}
         />
+        <input type='submit' className='hidden' />
       </form>
       <CardFooter>
         <SimpleButton type='button' color='blue' onClick={handleSubmit(onSubmit)}>

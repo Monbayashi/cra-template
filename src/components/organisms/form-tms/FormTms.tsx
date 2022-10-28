@@ -225,6 +225,7 @@ export const FormTms: React.FC<Props> = (props) => {
           register={register}
           error={errors.randomMin?.message}
         />
+        <input type='submit' className='hidden' />
       </form>
       <CardFooter>
         <div className='flex justify-between w-full'>

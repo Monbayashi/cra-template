@@ -195,6 +195,7 @@ export const FormSvs: React.FC<Props> = (props) => {
           placeholder='送信前にランダムな値に変換する。'
           register={register}
         />
+        <input type='submit' className='hidden' />
       </form>
       <CardFooter>
         <div className='flex justify-between w-full'>
