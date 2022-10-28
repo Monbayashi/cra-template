@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { SideBar } from './SideBar';
 
 export default {
-  title: 'Atomic Component/Organisms/Layouts/SideBar',
+  title: 'Atomic Component/Layouts/SideBar',
   component: SideBar,
   parameters: {
     layout: 'fullscreen',

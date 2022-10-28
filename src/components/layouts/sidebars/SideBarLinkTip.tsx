@@ -1,4 +1,4 @@
-import { lintName } from '../../../../utils/lintNames';
+import { lintName } from '../../../utils/lintNames';
 
 type Props = {
   tip: string;

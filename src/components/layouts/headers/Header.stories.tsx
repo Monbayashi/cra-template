@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Header } from './Header';
 
 export default {
-  title: 'Atomic Component/Organisms/Layouts/Header',
+  title: 'Atomic Component/Layouts/Header',
   component: Header,
   parameters: {
     layout: 'fullscreen',

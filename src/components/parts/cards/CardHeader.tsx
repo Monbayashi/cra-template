@@ -4,8 +4,10 @@ type Props = {
 };
 
 export const CardHeader: React.FC<Props> = ({ title, description }) => (
-  <div className='flex items-end justify-between border-gray-500 px-4 pb-2 pt-4'>
-    <h3 className='text-lg font-semibold text-gray-50'>{title}</h3>
-    <p className='pl-2 text-sm text-gray-200'>{description}</p>
+  <div className='flex flex-wrap items-end justify-between p-4 rounded-t'>
+    <h3 className='text-lg font-semibold'>{title}</h3>
+    <p className='inline-block pl-2 text-sm text-gray-500 overflow-hidden text-ellipsis'>
+      {description}
+    </p>
   </div>
 );

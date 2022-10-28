@@ -4,6 +4,7 @@ import * as yup from 'yup';
 
 import { SimpleButton } from '../../parts/buttons/SimpleButton.parts';
 import { Card } from '../../parts/cards/Card';
+import { CardFooter } from '../../parts/cards/CardFooter';
 import { CardHeader } from '../../parts/cards/CardHeader';
 import { CheckBox } from '../../parts/form/CheckBox';
 import { LineTextInput } from '../../parts/form/LineTextInput';
@@ -71,10 +72,12 @@ export const FormCycle: React.FC<Props> = (props) => {
           register={register}
           error={errors.sendCycle?.message}
         />
-        <SimpleButton type='submit' color='blue'>
+      </form>
+      <CardFooter>
+        <SimpleButton type='button' color='blue' onClick={handleSubmit(onSubmit)}>
           設定
         </SimpleButton>
-      </form>
+      </CardFooter>
     </Card>
   );
 };

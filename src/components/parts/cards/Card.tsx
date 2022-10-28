@@ -3,5 +3,5 @@ type Props = {
 };
 
 export const Card: React.FC<Props> = ({ children }) => (
-  <div className='w-full min-w-0 break-words rounded bg-gray-800 shadow-lg'>{children}</div>
+  <section className='w-full flex flex-col rounded bg-gray-300 shadow-lg'>{children}</section>
 );

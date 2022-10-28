@@ -15,12 +15,12 @@ export const SideBarLink: React.FC<Props> = ({ href, name, Icon, Tip }) => (
   <li>
     <Link
       to={href}
-      className='relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-100 hover:border-gray-800 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none '
+      className='relative flex flex-row items-center h-11 focus:outline-none focus:bg-blue-800 focus:border-blue-500 hover:bg-blue-800  border-l-4 border-transparent hover:border-blue-500 pr-6'
     >
-      <span className='ml-4 inline-flex items-center justify-center'>{Icon}</span>
-      <span className='ml-2 truncate text-sm tracking-wide'>{name}</span>
+      <span className='inline-flex justify-center items-center ml-4'>{Icon}</span>
+      <span className='ml-2 text-sm tracking-wide truncate'>{name}</span>
       {Tip && (
-        <span className='ml-auto hidden rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium tracking-wide text-blue-500 md:block'>
+        <span className='hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full'>
           {Tip}
         </span>
       )}

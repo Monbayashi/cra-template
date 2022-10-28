@@ -52,7 +52,7 @@ export const SaveModal: React.FC<Props> = ({
           />
         </div>
       </div>
-      <div className='px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
+      <div className='px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2'>
         <SimpleButton type='button' color='red' onClick={onClickSave} size='full'>
           保存する
         </SimpleButton>

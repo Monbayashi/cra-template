@@ -3,5 +3,5 @@ type Props = {
 };
 
 export const Main: React.FC<Props> = ({ children }) => (
-  <main className='ml-14 mt-14 md:ml-64'>{children}</main>
+  <main className='h-full ml-14 mt-14 mb-10 md:ml-64 text-gray-800'>{children}</main>
 );

@@ -5,6 +5,7 @@ import * as yup from 'yup';
 
 import { SimpleButton } from '../../parts/buttons/SimpleButton.parts';
 import { Card } from '../../parts/cards/Card';
+import { CardFooter } from '../../parts/cards/CardFooter';
 import { CardHeader } from '../../parts/cards/CardHeader';
 import { LineTextInput } from '../../parts/form/LineTextInput';
 
@@ -84,11 +85,13 @@ export const FormWss: React.FC<Props> = (props) => {
           register={register}
           error={errors.secKey?.message}
         />
-        <div className='flex justify-between'>
-          <SimpleButton type='submit' color='blue'>
+      </form>
+      <CardFooter>
+        <div className='flex justify-between w-full'>
+          <SimpleButton type='button' color='blue' onClick={handleSubmit(onSubmit)}>
             設定
           </SimpleButton>
-          <div className='space-x-2'>
+          <div className='flex gap-4'>
             <SimpleButton type='button' color='red' onClick={props.saveModalOpenHandling}>
               Save
             </SimpleButton>
@@ -97,7 +100,7 @@ export const FormWss: React.FC<Props> = (props) => {
             </SimpleButton>
           </div>
         </div>
-      </form>
+      </CardFooter>
     </Card>
   );
 };

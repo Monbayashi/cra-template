@@ -623,6 +623,7 @@ module.exports = {
       fit: 'fit-content',
     }),
     maxWidth: ({ theme, breakpoints }) => ({
+      ...theme('spacing'),
       none: 'none',
       0: '0rem',
       xs: '20rem',
@@ -652,14 +653,15 @@ module.exports = {
       max: 'max-content',
       fit: 'fit-content',
     }),
-    minWidth: {
+    minWidth: ({ theme }) => ({
+      ...theme('spacing'),
       0: '0px',
       full: '100%',
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
       '140-px': '140px',
-    },
+    }),
     objectPosition: {
       bottom: 'bottom',
       center: 'center',

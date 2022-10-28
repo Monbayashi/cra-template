@@ -5,7 +5,7 @@ import {
   MessageIcon,
   PersonIcon,
   SettingIcon,
-} from '../../../parts/icons';
+} from '../../parts/icons';
 
 type Props = {
   type: 'Bell' | 'Board' | 'Home' | 'Message' | 'Person' | 'Setting';

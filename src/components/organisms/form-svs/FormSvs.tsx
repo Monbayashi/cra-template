@@ -9,6 +9,7 @@ import { FileReadEx } from '../../../utils/fileReadEx';
 import { InputButton, InputButtonItem } from '../../parts/buttons/InputButton';
 import { SimpleButton } from '../../parts/buttons/SimpleButton.parts';
 import { Card } from '../../parts/cards/Card';
+import { CardFooter } from '../../parts/cards/CardFooter';
 import { CardHeader } from '../../parts/cards/CardHeader';
 import { CheckBox } from '../../parts/form/CheckBox';
 
@@ -108,7 +109,7 @@ export const FormSvs: React.FC<Props> = (props) => {
       <CardHeader title='2値設定フォーム' />
       <input type='file' accept='.csv' className='hidden' ref={inputRef} onChange={onFileChange} />
       <form className='p-4' onSubmit={handleSubmit(onSubmit)}>
-        <div className='flex flex-wrap space-x-2'>
+        <div className='flex flex-wrap gap-2'>
           <SimpleButton
             type='button'
             color='blue'
@@ -164,7 +165,7 @@ export const FormSvs: React.FC<Props> = (props) => {
                 <Controller
                   render={({ field }) => (
                     <input
-                      className='mx-2 grow border-b-2 border-gray-700 bg-transparent px-2 text-gray-50 focus:border-blue-500 focus:outline-none'
+                      className='mx-2 grow border-b-2 border-gray-700 bg-transparent px-2 focus:border-blue-500 focus:outline-none'
                       placeholder='識別子'
                       {...field}
                     />
@@ -175,7 +176,7 @@ export const FormSvs: React.FC<Props> = (props) => {
                 <Controller
                   render={({ field }) => (
                     <input
-                      className='mx-2 grow border-b-2 border-gray-700 bg-transparent px-2 text-gray-50 focus:border-blue-500 focus:outline-none'
+                      className='mx-2 grow border-b-2 border-gray-700 bg-transparent px-2 focus:border-blue-500 focus:outline-none'
                       placeholder='送信値'
                       {...field}
                     />
@@ -194,11 +195,13 @@ export const FormSvs: React.FC<Props> = (props) => {
           placeholder='送信前にランダムな値に変換する。'
           register={register}
         />
-        <div className='flex justify-between'>
-          <SimpleButton type='submit' color='blue'>
+      </form>
+      <CardFooter>
+        <div className='flex justify-between w-full'>
+          <SimpleButton type='button' color='blue' onClick={handleSubmit(onSubmit)}>
             設定
           </SimpleButton>
-          <div className='space-x-2'>
+          <div className='flex gap-4'>
             <SimpleButton type='button' color='red' onClick={props.saveModalOpenHandling}>
               Save
             </SimpleButton>
@@ -207,7 +210,7 @@ export const FormSvs: React.FC<Props> = (props) => {
             </SimpleButton>
           </div>
         </div>
-      </form>
+      </CardFooter>
     </Card>
   );
 };

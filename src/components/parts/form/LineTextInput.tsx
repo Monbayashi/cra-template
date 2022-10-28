@@ -13,7 +13,7 @@ export const LineTextInput = <T extends FieldValues>(props: Props<T>) => (
     <input
       type='text'
       id={props.id}
-      className='peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent py-2.5 px-0 text-gray-50 focus:border-blue-500 focus:outline-none focus:ring-0'
+      className='peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent pt-2.5 pb-1.5 px-0 focus:border-blue-500 focus:outline-none focus:ring-0'
       placeholder=' '
       autoComplete='off'
       spellCheck='false'
